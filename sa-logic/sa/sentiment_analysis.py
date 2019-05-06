@@ -13,6 +13,12 @@ def analyse_sentiment():
         polarity=polarity
     )
 
+@app.route("/health", methods=['GET'])
+def check_health():
+    return jsonify(
+        message="sa logic is healthy"
+    )
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
