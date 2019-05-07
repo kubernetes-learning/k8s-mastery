@@ -116,10 +116,8 @@ metadata:
   labels:
     app: sa-logic
 spec:
-  type: NodePort
   ports:
   - port: 5000
     targetPort: 5000
-    nodePort: 30002
   selector:
     app: sa-logic
