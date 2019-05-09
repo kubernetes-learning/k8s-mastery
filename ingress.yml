@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sa-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/sa
+        backend:
+          serviceName: sa-webapp
+          servicePort: 8080
+      - path: /api/account
+        backend:
+          serviceName: account-management-service
+          servicePort: 8080
+      - path: /
+        backend:
+          serviceName: sa-frontend
+          servicePort: 80
