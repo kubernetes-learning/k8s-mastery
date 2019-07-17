@@ -12,6 +12,10 @@ spec:
         backend:
           serviceName: sa-webapp
           servicePort: 8080
+      - path: /api/form
+        backend:
+          serviceName: form-management-service
+          servicePort: 8080
       - path: /api/account
         backend:
           serviceName: account-management-service

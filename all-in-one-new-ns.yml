@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecret
+  namespace: development-env
+type: Opaque
+data:
+  password: RWhvbWUxMDAlMjU=
+  username: aGx6aGFu
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sa-webapp
+  namespace: development-env
+  labels:
+    app: sa-webapp
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: sa-webapp
+  template:
+    metadata:
+      labels:
+        app: sa-webapp
+    spec:
+      containers:
+      - name: sa-webapp
+        image: zhanhonglai/sa-webapp
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ZHANHONGLAI_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: username
+        - name: ZHANHONGLAI_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: password
+---       
+apiVersion: v1
+kind: Service
+metadata:
+  name: sa-webapp
+  namespace: development-env
+  labels:
+    app: sa-webapp
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: sa-webapp
