@@ -20,7 +20,7 @@ spec:
         backend:
           serviceName: account-management-service
           servicePort: 8080
-      - path: /
+      - path: /honglai
         backend:
           serviceName: sa-frontend
           servicePort: 80
